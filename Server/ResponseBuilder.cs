@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +9,14 @@ namespace Server
 {
     class ResponseBuilder
     {
+
+        private string status;
+        public string Status {
+            get {return status; }
+            set {status = value; }
+        }
+       
+
         private string method;
         public string Method
         {
@@ -42,21 +50,46 @@ namespace Server
 
         public string CreateResponse(string m)
         {
-            string response = "";
-            ResponseBuilder responseBuilder = new ResponseBuilder();
-                
-            responseBuilder = JsonSerializer.Deserialize <ResponseBuilder>(m);
+            Stack responseStack = new Stack();
+            int ok = 1;
+            int created = 2;
+            int updated = 3;
+            int badRequest = 4;
+            int notFound = 5;
+            int error = 6;
 
+
+            ResponseBuilder responseBuilder = new ResponseBuilder();
+
+            responseBuilder = JsonSerializer.Deserialize<ResponseBuilder>(m);
+
+            // 02
             if (responseBuilder.Method.Equals(null))
             {
-                response += "missing method ";
+                responseStack.Push("missing method");
             }
 
-            if (responseBuilder.path.Equals(null)) 
+            // 03
+            string[] methods = new string[6] { "create", "read", "write", "update", "delete", "echo" };
+
+            foreach (string value in methods)
             {
-                
+                if (!(value.Equals(responseBuilder.Method)))
+                {
+                    responseStack.Push("illigal method");
+
+                }
             }
-            return response;
+            // 04, 05, 06 , 07
+
+
+            if (responseBuilder.Path.Equals(null))
+            {
+                responseStack.Push("missing resource");
+
+
+            }
+            return responseStack.ToString();
         }
 
 

@@ -23,9 +23,10 @@ namespace Server
                 var message = client.Read();
 
 
-                responseBuilder.CreateResponse(message);
+                responseBuilder.Status = responseBuilder.CreateResponse(message);
 
-                Console.WriteLine($"Client message '{message}'");
+                
+                //Console.WriteLine($"Client message '{message}'");
 
                 client.Write(message.ToUpper());
 
