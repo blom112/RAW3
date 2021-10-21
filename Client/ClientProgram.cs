@@ -19,7 +19,7 @@ namespace Client
             request.Path = "This is the path";
 
 
-            string output = JsonSerializer.Serialize(request);
+            var output = JsonSerializer.Serialize(request);
 
             var client = new NetworkClient();
 
