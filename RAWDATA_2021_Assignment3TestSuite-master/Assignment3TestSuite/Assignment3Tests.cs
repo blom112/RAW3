@@ -40,6 +40,7 @@ namespace Assignment3TestSuite
         /// 
         ////////////////////////////////////////////////////////// 
 
+        // 01
         [Fact]
         public void Constraint_ConnectionWithoutRequest_ShouldConnect()
         {
@@ -49,6 +50,7 @@ namespace Assignment3TestSuite
 
         /*    Method Tests     */
 
+        // 02
         [Fact]
         public void Constraint_RequestWithoutMethod_MissingMethodError()
         {
@@ -61,6 +63,7 @@ namespace Assignment3TestSuite
             Assert.Contains("missing method", response.Status.ToLower());
         }
 
+        // 03
         [Fact]
         public void Constraint_RequestWithUnknownMethod_IllegalMethodError()
         {
@@ -80,6 +83,7 @@ namespace Assignment3TestSuite
             Assert.Contains("illegal method", response.Status.ToLower());
         }
 
+        // 04
         [Theory]
         [InlineData("create")]
         [InlineData("read")]
@@ -104,6 +108,7 @@ namespace Assignment3TestSuite
 
         /* Date Tests    */
 
+        // 05
         [Fact]
         public void Constraint_RequestWithoutDate_MissingDateError()
         {
@@ -116,6 +121,7 @@ namespace Assignment3TestSuite
             Assert.Contains("missing date", response.Status.ToLower());
         }
 
+        // 06
         [Fact]
         public void Constraint_RequestWhereDateIsNotUnixTime_IllegalDateError()
         {
@@ -137,6 +143,7 @@ namespace Assignment3TestSuite
 
         /* Body Tests    */
 
+        // 07
         [Theory]
         [InlineData("create")]
         [InlineData("update")]
@@ -158,7 +165,7 @@ namespace Assignment3TestSuite
             Assert.Contains("missing body", response.Status.ToLower());
         }
 
-        
+        // 08
         [Fact]
         public void Constraint_RequestUpdateWithoutJsonBody_IllegalBodyError()
         {
@@ -181,6 +188,8 @@ namespace Assignment3TestSuite
         }
 
         /* Echo Test */
+
+        // 09
         [Fact]
         public void Echo_RequestWithBody_ReturnsBody()
         {
@@ -208,6 +217,7 @@ namespace Assignment3TestSuite
 
         /* Path tests  */
 
+        // 10
         [Fact]
         public void Constraint_RequestWithInvalidPath_StatusBadRequest()
         {
@@ -228,6 +238,7 @@ namespace Assignment3TestSuite
             Assert.Equal(expectedResponse.ToJson().ToLower(), response.ToJson().ToLower());
         }
 
+        // 11
         [Fact]
         public void Constraint_RequestWithInvalidPathId_StatusBadRequest()
         {
@@ -248,6 +259,7 @@ namespace Assignment3TestSuite
             Assert.Equal(expectedResponse.ToJson().ToLower(), response.ToJson().ToLower());
         }
 
+        // 12
         [Fact]
         public void Constraint_CreateWithPathId_StatusBadRequest()
         {
@@ -269,6 +281,7 @@ namespace Assignment3TestSuite
             Assert.Equal(expectedResponse.ToJson().ToLower(), response.ToJson().ToLower());
         }
 
+        // 13
         [Fact]
         public void Constraint_UpdateWithOutPathId_StatusBadRequest()
         {
@@ -290,6 +303,7 @@ namespace Assignment3TestSuite
             Assert.Equal(expectedResponse.ToJson().ToLower(), response.ToJson().ToLower());
         }
 
+        // 14
         [Fact]
         public void Constraint_DeleteWithOutPathId_StatusBadRequest()
         {
@@ -314,6 +328,7 @@ namespace Assignment3TestSuite
 
         /* Read tests */
 
+        // 15
         [Fact]
         public void Request_ReadCategories_StatusOkAndListOfCategoriesInBody()
         {
@@ -345,6 +360,7 @@ namespace Assignment3TestSuite
             Assert.Equal(expectedResponse.ToJson(), response.ToJson());
         }
 
+        // 16
         [Fact]
         public void Request_ReadCategoryWithValidId_StatusOkAndCategoryInBody()
         {
@@ -369,6 +385,7 @@ namespace Assignment3TestSuite
             Assert.Equal(expectedResponse.ToJson(), response.ToJson());
         }
 
+        // 17
         [Fact]
         public void Request_ReadCategoryWithInvalidId_StatusNotFound()
         {
@@ -390,6 +407,7 @@ namespace Assignment3TestSuite
 
         /* Update tests  */
 
+        // 18
         [Fact]
         public void Request_UpdateCategoryWithValidIdAndBody_StatusUpdated()
         {
@@ -425,6 +443,7 @@ namespace Assignment3TestSuite
             client.ReadResponse();
         }
 
+        // 19
         [Fact]
         public void Request_UpdateCategotyValidIdAndBody_ChangedCategoryName()
         {
@@ -470,6 +489,7 @@ namespace Assignment3TestSuite
             client.ReadResponse();
         }
 
+        // 20
         [Fact]
         public void Request_UpdateCategotyInvalidId_NotFound()
         {
@@ -492,6 +512,7 @@ namespace Assignment3TestSuite
 
         /* Create Tests  */
 
+        // 21
         [Fact]
         public void Request_CreateCategoryWithValidBodyArgument_CreateNewCategory()
         {
@@ -530,6 +551,7 @@ namespace Assignment3TestSuite
 
         /* Delete Tests  */
 
+        // 22
         [Fact]
         public void Request_DeleteCategoryWithValidId_RemoveCategory()
         {
@@ -560,6 +582,7 @@ namespace Assignment3TestSuite
             Assert.Contains("1 ok", response.Status.ToLower());
         }
 
+        // 23
         [Fact]
         public void Request_DeleteCategoryWithInvalidId_StatusNotFound()
         {
