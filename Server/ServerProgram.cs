@@ -21,18 +21,17 @@ namespace Server
 
                 var message = client.Read();
 
-                
+                CreateResponse(message);
 
                 Console.WriteLine($"Client message '{message}'");
 
                 client.Write(message.ToUpper());
 
-                
-                
-            }
+               
            
+            }
         }
-        public string CreateResponse(string m)
+        public static string CreateResponse(string m)
         {
             string response = "";
             if (String.IsNullOrEmpty(m))
@@ -42,6 +41,5 @@ namespace Server
 
             return response;
         }
-
     }
 }
