@@ -40,24 +40,23 @@ namespace Server
             set { body = value; }
         }
 
-        public void CreateResponse(string m)
+        public string CreateResponse(string m)
         {
-
+            string response = "";
             ResponseBuilder responseBuilder = new ResponseBuilder();
                 
             responseBuilder = JsonSerializer.Deserialize <ResponseBuilder>(m);
 
-            Console.WriteLine(responseBuilder.Method);
-
-            /*if(responseBuilder.Method == "")
-            string response = "";
-            if (clientMessage.)
+            if (responseBuilder.Method.Equals(null))
             {
-                response += "is missing";
+                response += "missing method ";
             }
-            
 
-            return response;*/
+            if (responseBuilder.path.Equals(null)) 
+            {
+                
+            }
+            return response;
         }
 
 
