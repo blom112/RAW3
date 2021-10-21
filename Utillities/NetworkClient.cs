@@ -55,5 +55,7 @@ namespace Utillities
                 return Encoding.UTF8.GetString(memStream.ToArray());
             }
         }
+
+     
     }
 }

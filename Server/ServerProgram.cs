@@ -13,7 +13,7 @@ namespace Server
             var server = new TcpListener(IPAddress.Loopback, 5000);
             server.Start();
             Console.WriteLine("Server started");
-
+            
             while (true)
             {
                 var client = new NetworkClient(server.AcceptTcpClient());
@@ -21,11 +21,27 @@ namespace Server
 
                 var message = client.Read();
 
+                
+
                 Console.WriteLine($"Client message '{message}'");
 
                 client.Write(message.ToUpper());
+
+                
+                
+            }
+           
+        }
+        public string CreateResponse(string m)
+        {
+            string response = "";
+            if (String.IsNullOrEmpty(m))
+            {
+                response += "is missing";
             }
 
+            return response;
         }
+
     }
 }

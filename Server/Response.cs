@@ -8,8 +8,7 @@ namespace Server
 {
     class Response
     {
-
-
+       
 
     }
 }
