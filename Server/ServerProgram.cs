@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using Utillities;
+using System.Text.Json;
 
 namespace Server
 {
@@ -22,13 +23,15 @@ namespace Server
 
                 var message = client.Read();
 
+                var messagesent = responseBuilder.CreateResponse(message);
+                
+              
 
-                responseBuilder.Status = responseBuilder.CreateResponse(message);
-
+                Console.WriteLine("!!!!!!!!!!" + responseBuilder.Status);
                 
                 //Console.WriteLine($"Client message '{message}'");
 
-                client.Write(message.ToUpper());
+                client.Write(messagesent);
 
                
            

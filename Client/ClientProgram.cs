@@ -13,10 +13,10 @@ namespace Client
         {
 
             Request request = new Request();
-            request.Method = "This is the method";
+            request.Method = "";
             request.Date = request.ConvertCurrentDate();
-            request.Body = "This is the body";
-            request.Path = "This is the path";
+            request.Body = "";
+            request.Path = "";
 
 
             var output = JsonSerializer.Serialize(request);
@@ -29,7 +29,7 @@ namespace Client
 
 
             client.Write(message);
-
+            
             var response = client.Read();
 
             Console.WriteLine($"Server response '{response}'");

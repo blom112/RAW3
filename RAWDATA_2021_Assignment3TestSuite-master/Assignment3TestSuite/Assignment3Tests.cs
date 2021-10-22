@@ -54,13 +54,18 @@ namespace Assignment3TestSuite
         [Fact]
         public void Constraint_RequestWithoutMethod_MissingMethodError()
         {
+
             var client = Connect();
 
             client.SendRequest("{}");
 
             var response = client.ReadResponse();
+           
 
             Assert.Contains("missing method", response.Status.ToLower());
+           
+
+      
         }
 
         // 03
