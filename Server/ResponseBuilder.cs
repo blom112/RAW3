@@ -5,17 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 
+
 namespace Server
 {
     class ResponseBuilder
     {
+
 
         private string status;
         public string Status {
             get {return status; }
             set {status = value; }
         }
-       
+      
 
         private string method;
         public string Method
@@ -31,9 +33,9 @@ namespace Server
             set { path = value; }
         }
 
-        private long date;
+        private string date;
 
-        public long Date
+        public string Date
         {
             get { return date; }
 
@@ -47,11 +49,11 @@ namespace Server
             get { return body; }
             set { body = value; }
         }
-
+        
         public string CreateResponse(string m)
         {
             ArrayList responseList= new ArrayList();
-           
+
             /*int ok = 1;
             int created = 2;
             int updated = 3;
@@ -61,35 +63,46 @@ namespace Server
 
            */
 
-            ResponseBuilder responseBuilder = new ResponseBuilder();
+            ResponseBuilder responseBuilder;
 
-            responseBuilder = JsonSerializer.Deserialize<ResponseBuilder>(m);
-           
+            responseBuilder = JsonSerializer.Deserialize<ResponseBuilder>(m, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+
             string[] methods = new string[6] { "create", "read", "write", "update", "delete", "echo" };
             // 02
-            Console.WriteLine("starting foreach test 2");
+
+
             foreach (string value in methods)
             {
                 if (String.IsNullOrEmpty(responseBuilder.Method))
                 {
-                    responseList.Add("missing method ");
+                    if ((!responseList.Contains("missing method")))
+                    {
+                        responseList.Add("missing method ");
+                    }
 
-                    Console.WriteLine("test 2");
-                    Console.WriteLine(responseList[0]);
                 }
-            }
-            Console.WriteLine("ending foreach test 2");
+               
 
-            // 03
-            foreach (string value in methods)
-            {
                 if (!(value.Equals(responseBuilder.Method)))
                 {
-                    responseList.Add("illigal method ");
+                    if ((!responseList.Contains("illegal method ")))
+                    {
 
+                        responseList.Add("illegal method ");
+                    }               
                 }
-            }
 
+                if (!String.IsNullOrEmpty(responseBuilder.Path)) 
+                {
+                    responseList.Add("missing resource");
+                }
+
+            }
+         
+
+           
+
+            /*
             // 04, 05, 06 , 07 Wrong
             foreach (string value in methods)
             {
@@ -99,23 +112,22 @@ namespace Server
 
                 }
             }
-
-            Console.WriteLine("building output string/starting popstack");
+            */
+         
      
-            Console.WriteLine(responseList[1]);
+            
            foreach (string value in responseList)
             {
                responseBuilder.Status += value;
-                Console.WriteLine(responseBuilder.Status);
+                
             }
-            Console.WriteLine(responseBuilder.Status + " this is the final output");
 
+         
+      
 
-          var message = JsonSerializer.Serialize<ResponseBuilder>(responseBuilder);
-
-            responseBuilder = JsonSerializer.Deserialize<ResponseBuilder>(message);
-            Console.WriteLine(responseBuilder.Status);
-            return message;
+         string sending = JsonSerializer.Serialize<ResponseBuilder>(responseBuilder, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+           
+            return sending;
         }
 
 

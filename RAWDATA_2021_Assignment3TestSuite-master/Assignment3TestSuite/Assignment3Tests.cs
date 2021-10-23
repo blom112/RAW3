@@ -17,7 +17,8 @@ namespace Assignment3TestSuite
 
     public class Response
     {
-        public string Status { get; set; }
+        //private string status;
+        public string Status { get; /*{ return status; }*/ set; /*{ value = status; }*/ }
         public string Body { get; set; }
     }
 
@@ -60,11 +61,11 @@ namespace Assignment3TestSuite
             client.SendRequest("{}");
 
             var response = client.ReadResponse();
-           
+            
 
             Assert.Contains("missing method", response.Status.ToLower());
-           
 
+           
       
         }
 

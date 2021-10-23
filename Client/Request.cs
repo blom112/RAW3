@@ -24,9 +24,9 @@ namespace Client
             set { path = value; }
         }
 
-        private long date;
+        private string date;
 
-         public long Date
+         public string Date
          { 
              get { return date; }
             
@@ -40,7 +40,7 @@ namespace Client
             set { body = value; }
         }
 
-
+/*
         public long ConvertCurrentDate() {
 
             DateTime datetime = DateTime.Now; 
@@ -48,6 +48,7 @@ namespace Client
                date = ((DateTimeOffset)datetime).ToUnixTimeSeconds();
             return date;
         }
+*/
     }
  
 }

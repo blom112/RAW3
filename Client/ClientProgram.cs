@@ -14,21 +14,21 @@ namespace Client
 
             Request request = new Request();
             request.Method = "";
-            request.Date = request.ConvertCurrentDate();
-            request.Body = "";
-            request.Path = "";
+            request.Date = "";
+            request.Body = "IM THE BODY";
+            request.Path = "IM THE PATH";
 
 
-            var output = JsonSerializer.Serialize(request);
+            
+         string serialized =  JsonSerializer.Serialize<Request>(request, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
 
             var client = new NetworkClient();
 
             client.Connect("localhost", 5000);
 
-            var message = output;
 
 
-            client.Write(message);
+            client.Write(serialized);
             
             var response = client.Read();
 

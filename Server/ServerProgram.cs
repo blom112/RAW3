@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using Utillities;
 using System.Text.Json;
+using Utillities;
 
 namespace Server
 {
@@ -11,7 +10,10 @@ namespace Server
     {
         static void Main(string[] args)
         {
-            ResponseBuilder responseBuilder = new ResponseBuilder();
+            DualTranslator dualTranslator= new DualTranslator();
+            Validator validator = new Validator();
+       
+            
             var server = new TcpListener(IPAddress.Loopback, 5000);
             server.Start();
             Console.WriteLine("Server started");
@@ -22,20 +24,25 @@ namespace Server
                 Console.WriteLine("Client accepted");
 
                 var message = client.Read();
+                var translatedClientMessage = dualTranslator.JsonToString(message);
+                var checkedMessageInString = validator.CheckIfTranslatedMessageIsAcceptable(translatedClientMessage);
+                var translatedandCheckedResponse = dualTranslator.StringToJson(checkedMessageInString);
 
-                var messagesent = responseBuilder.CreateResponse(message);
+               
                 
               
 
-                Console.WriteLine("!!!!!!!!!!" + responseBuilder.Status);
+              
                 
-                //Console.WriteLine($"Client message '{message}'");
+                Console.WriteLine($"Client message '{message}'");
+                Console.WriteLine($"Server message '{translatedandCheckedResponse}'");
 
-                client.Write(messagesent);
-
+                client.Write(translatedandCheckedResponse);
                
-           
+
+
             }
+            
         }
       
     }
