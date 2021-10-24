@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Server
@@ -48,10 +49,11 @@ namespace Server
             set { body = value; }
         }
 
-        public string CheckIfTranslatedMessageIsAcceptable(string translatedMessage) 
+        public string CheckIfTranslatedMessageIsAcceptable(string ToBeTranslated) 
         {
-            Validator validator = new Validator();
-            DualTranslator dualTranslator = new DualTranslator();
+
+            Validator validator = JsonSerializer.Deserialize<Validator>(ToBeTranslated, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+
             
             
             ArrayList responseList = new ArrayList();
@@ -65,21 +67,22 @@ namespace Server
             {
                 if (String.IsNullOrEmpty(validator.Method))
                 {
-                    if ((!responseList.Contains("missing method")))
+                    if (!responseList.Contains("missing method"))
                     {
                         responseList.Add("missing method ");
                     }
-
+                    
                 }
 
 
                 if (!(value.Equals(validator.Method)))
                 {
-                    if ((!responseList.Contains("illegal method ")))
+                    if (!responseList.Contains("illegal method "))
                     {
 
                         responseList.Add("illegal method ");
                     }
+                    
                 }
 
                 if (!String.IsNullOrEmpty(validator.Path))
@@ -94,12 +97,12 @@ namespace Server
 
             foreach (string value in responseList)
             {
-                validator.Status = value;
+                validator.Status += value;
 
             }
-            string resultOfChecking = validator.Status;
 
-            return resultOfChecking;
+            return validator.Status;
+           
         }
     }
 }

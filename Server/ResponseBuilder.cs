@@ -10,7 +10,7 @@ namespace Server
 {
     class ResponseBuilder
     {
-
+/*
 
         private string status;
         public string Status {
@@ -61,7 +61,7 @@ namespace Server
             int notFound = 5;
             int error = 6;
 
-           */
+           
 
             ResponseBuilder responseBuilder;
 
@@ -94,15 +94,14 @@ namespace Server
 
                 if (!String.IsNullOrEmpty(responseBuilder.Path)) 
                 {
-                    responseList.Add("missing resource");
+                    responseList.Add("missing resource ");
                 }
 
             }
          
 
            
-
-            /*
+            
             // 04, 05, 06 , 07 Wrong
             foreach (string value in methods)
             {
@@ -112,7 +111,7 @@ namespace Server
 
                 }
             }
-            */
+            
          
      
             
@@ -130,7 +129,7 @@ namespace Server
             return sending;
         }
 
-
+*/
 
     }
 }

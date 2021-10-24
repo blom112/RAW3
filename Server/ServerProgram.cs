@@ -24,9 +24,9 @@ namespace Server
                 Console.WriteLine("Client accepted");
 
                 var message = client.Read();
-                var translatedClientMessage = dualTranslator.JsonToString(message);
-                var checkedMessageInString = validator.CheckIfTranslatedMessageIsAcceptable(translatedClientMessage);
-                var translatedandCheckedResponse = dualTranslator.StringToJson(checkedMessageInString);
+                Console.WriteLine($"Client message '{message}'");
+               
+                var translatedAndValidatedResponse = dualTranslator.StringToJson(validator.CheckIfTranslatedMessageIsAcceptable(message));
 
                
                 
@@ -34,10 +34,10 @@ namespace Server
 
               
                 
-                Console.WriteLine($"Client message '{message}'");
-                Console.WriteLine($"Server message '{translatedandCheckedResponse}'");
+              
+                Console.WriteLine($"Server message '{translatedAndValidatedResponse}'");
 
-                client.Write(translatedandCheckedResponse);
+                client.Write(translatedAndValidatedResponse);
                
 
 

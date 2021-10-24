@@ -25,30 +25,30 @@ namespace Server
             set { translatedStringToJson = value; }
         }
 
-
+/*
         public string JsonToString(string m)
         {
 
             DualTranslator JsonToStringTranslator = new DualTranslator();
-
-            JsonToStringTranslator = JsonSerializer.Deserialize<DualTranslator>(m, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-
-
+            Validator validator = new Validator();
+            
 
 
-            return JsonToStringTranslator.TranslatedJsonToString;
+
+
+            return TranslatedJsonToString;
         }
 
-
+        */
         public string StringToJson(string m)
         {
+           
 
-            DualTranslator StringToJsonTranslator = new DualTranslator();
 
+           TranslatedStringToJson = JsonSerializer.Serialize(m, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
 
-            StringToJsonTranslator = JsonSerializer.Serialize<DualTranslator>(m, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-
-            return StringToJsonTranslator.TranslatedStringToJson;
+           
+            return TranslatedStringToJson;
         }
     }
 
