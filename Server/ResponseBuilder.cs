@@ -12,10 +12,10 @@ namespace Server
 
         private string status;
         public string Status {
-            get {return status; }
-            set {status = value; }
+            get { return status; }
+            set { status = value; }
         }
-       
+
 
         private string method;
         public string Method
@@ -31,9 +31,9 @@ namespace Server
             set { path = value; }
         }
 
-        private long date;
+        private string date;
 
-        public long Date
+        public string Date
         {
             get { return date; }
 
@@ -50,8 +50,8 @@ namespace Server
 
         public string CreateResponse(string m)
         {
-            ArrayList responseList= new ArrayList();
-           
+            ArrayList responseList = new ArrayList();
+
             /*int ok = 1;
             int created = 2;
             int updated = 3;
@@ -63,57 +63,89 @@ namespace Server
 
             ResponseBuilder responseBuilder = new ResponseBuilder();
 
-            responseBuilder = JsonSerializer.Deserialize<ResponseBuilder>(m);
-           
+            responseBuilder = JsonSerializer.Deserialize<ResponseBuilder>(m, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+
             string[] methods = new string[6] { "create", "read", "write", "update", "delete", "echo" };
             // 02
-            Console.WriteLine("starting foreach test 2");
+
             foreach (string value in methods)
             {
                 if (String.IsNullOrEmpty(responseBuilder.Method))
                 {
-                    responseList.Add("missing method ");
+                    if (!responseList.Contains("missing method")) {
+                        responseList.Add("missing method ");
 
-                    Console.WriteLine("test 2");
-                    Console.WriteLine(responseList[0]);
+                    }
                 }
             }
-            Console.WriteLine("ending foreach test 2");
+
 
             // 03
             foreach (string value in methods)
             {
                 if (!(value.Equals(responseBuilder.Method)))
                 {
-                    responseList.Add("illigal method ");
-
+                    if (!responseList.Contains("illegal method"))
+                        responseList.Add("illegal method ");
                 }
             }
+        
 
             // 04, 05, 06 , 07 Wrong
             foreach (string value in methods)
             {
-                if (!value.Equals(responseBuilder.Path))
+                if (!(value.Equals(responseBuilder.Path)))
                 {
+                    if (!responseList.Contains("missing resource"))
+                    {
                     responseList.Add("missing resource ");
 
                 }
+}
             }
 
-            Console.WriteLine("building output string/starting popstack");
-     
+            //8 
+            foreach (string value in methods) {
+
+                if (!value.Equals(responseBuilder.Date))  {
+
+                    if (!responseList.Contains("missing date "))
+                    {
+                        responseList.Add("missing date ");
+                    }
+                }
+                    }
+           
+            //9 
+
+
+                foreach (string value in methods)
+            {
+
+                if (!value.Equals(responseBuilder.Date))
+                {
+
+                    if (!responseList.Contains("missing date "))
+                    {
+                        responseList.Add("illegal date ");
+
+                    }
+                }
+            }
+
+
             Console.WriteLine(responseList[1]);
            foreach (string value in responseList)
             {
                responseBuilder.Status += value;
-                Console.WriteLine(responseBuilder.Status);
+               
             }
-            Console.WriteLine(responseBuilder.Status + " this is the final output");
+          //  Console.WriteLine(responseBuilder.Status + " this is the final output");
 
 
-          var message = JsonSerializer.Serialize<ResponseBuilder>(responseBuilder);
+          var message = JsonSerializer.Serialize<ResponseBuilder>(responseBuilder, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
 
-            responseBuilder = JsonSerializer.Deserialize<ResponseBuilder>(message);
+           // responseBuilder = JsonSerializer.Deserialize<ResponseBuilder>(message, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
             Console.WriteLine(responseBuilder.Status);
             return message;
         }
