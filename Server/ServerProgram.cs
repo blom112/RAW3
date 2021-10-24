@@ -15,11 +15,15 @@ namespace Server
             var server = new TcpListener(IPAddress.Loopback, 5000);
             server.Start();
             Console.WriteLine("Server started");
-            
+            Console.WriteLine(DateTimeOffset.Now.ToString());
+
+
             while (true)
             {
                 var client = new NetworkClient(server.AcceptTcpClient());
                 Console.WriteLine("Client accepted");
+                Console.WriteLine(DateTimeOffset.Now.ToString());
+
 
                 var message = client.Read();
 

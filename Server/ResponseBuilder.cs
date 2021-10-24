@@ -48,6 +48,8 @@ namespace Server
             set { body = value; }
         }
 
+       
+
         public string CreateResponse(string m)
         {
             ArrayList responseList = new ArrayList();
@@ -61,13 +63,15 @@ namespace Server
 
            */
 
+            var jsonString = "";
+
             ResponseBuilder responseBuilder = new ResponseBuilder();
 
             responseBuilder = JsonSerializer.Deserialize<ResponseBuilder>(m, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
 
             string[] methods = new string[6] { "create", "read", "write", "update", "delete", "echo" };
-            // 02
 
+            // 02
             foreach (string value in methods)
             {
                 if (String.IsNullOrEmpty(responseBuilder.Method))
@@ -122,10 +126,10 @@ namespace Server
                 foreach (string value in methods)
             {
 
-                if (!value.Equals(responseBuilder.Date))
+                if (responseBuilder.Date.Contains("/"))
                 {
 
-                    if (!responseList.Contains("missing date "))
+                    if (!responseList.Contains("illegal date "))
                     {
                         responseList.Add("illegal date ");
 
@@ -133,24 +137,52 @@ namespace Server
                 }
             }
 
+                // 10, 11, 12
+            if (String.IsNullOrEmpty(responseBuilder.body)) 
+            {
+                if (!responseList.Contains("missing body"))
+                {
+                    responseList.Add("missing body ");
+
+                }
+            }
+
+
+            // 13, 14 Is auto when 13 is not relevant
+            if (!responseBuilder.method.Equals("echo") && !responseBuilder.body.Contains("{"))
+            {
+
+
+                if (!responseList.Contains("illegal body"))
+                {
+                    responseList.Add("illegal body ");
+                }
+            }
+
+           
+            /* 
+            // 15 --- Something wrong with this
+            if(!responseBuilder.path.Contains("/api/categories"))
+            {
+                responseBuilder.Status = "4 Bad Request";
+                jsonString = JsonSerializer.Serialize<ResponseBuilder>(responseBuilder, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                return jsonString;
+            }
+            */
+
 
             Console.WriteLine(responseList[1]);
            foreach (string value in responseList)
             {
                responseBuilder.Status += value;
-               
             }
-          //  Console.WriteLine(responseBuilder.Status + " this is the final output");
+            //  Console.WriteLine(responseBuilder.Status + " this is the final output");
 
-
-          var message = JsonSerializer.Serialize<ResponseBuilder>(responseBuilder, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+            jsonString = JsonSerializer.Serialize<ResponseBuilder>(responseBuilder, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
 
            // responseBuilder = JsonSerializer.Deserialize<ResponseBuilder>(message, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
             Console.WriteLine(responseBuilder.Status);
-            return message;
+            return jsonString;
         }
-
-
-
     }
 }

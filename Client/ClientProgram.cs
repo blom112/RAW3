@@ -14,9 +14,9 @@ namespace Client
 
             Request request = new Request();
             request.Method = "";
-            request.Date = request.ConvertCurrentDate();
+          //  request.Date = request.ConvertCurrentDate();
             request.Body = "";
-            request.Path = "";
+            request.Path = "/api/categories";
 
 
             var output = JsonSerializer.Serialize(request);
