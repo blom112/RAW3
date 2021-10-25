@@ -13,10 +13,10 @@ namespace Client
         {
 
             Request request = new Request();
-            request.Method = "";
-          //  request.Date = request.ConvertCurrentDate();
-            request.Body = "";
-            request.Path = "/api/categories";
+            request.Method = "Method";
+            request.Date = "Date";
+            request.Body = "Body";
+            request.Path = "Path";
 
 
             var output = JsonSerializer.Serialize(request);
