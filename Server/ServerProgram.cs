@@ -31,7 +31,7 @@ namespace Server
                 
               
 
-             //   Console.WriteLine(responseBuilder.Status);
+                //Console.WriteLine(responseBuilder.Status);
                 
                 //Console.WriteLine($"Client message '{message}'");
 

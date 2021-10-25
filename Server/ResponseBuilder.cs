@@ -10,45 +10,19 @@ namespace Server
     class ResponseBuilder
     {
 
-        private string status= "";
-        public string Status {
-            get { return status; }
-            set { status = value; }
-        }
+        public string Status { get; set; } = "";
+        
 
 
-        private string method= "";
-        public string Method
-        {
-            get { return method; }
-            set { method = value; }
-        }
+        public string Method { get; set; } = "";
 
-        private string path= "";
-        public string Path
-        {
-            get { return path; }
-            set { path = value; }
-        }
+        public string Path { get; set; } = "";
 
-        private string date = "";
+        public string Date { get; set; } = "";
 
-        public string Date
-        {
-            get { return date; }
-
-            set { date = value; }
-        }
+        public string Body { get; set; } = "";
 
 
-        private string body= "";
-        public string Body
-        {
-            get { return body; }
-            set { body = value; }
-        }
-
-       
 
         public string CreateResponse(string m)
         {
@@ -90,9 +64,9 @@ namespace Server
                 if (!(value.Equals(responseBuilder.Method)))
                 {
                     if (!responseList.Contains("illegal method"))
+                    {
                         responseList.Add("illegal method ");
-                    Console.WriteLine(responseBuilder.Method);
-                    Console.WriteLine("!!!!!!!!!!!!!!!!!");
+                    }
                 }
             }
         
@@ -113,7 +87,7 @@ namespace Server
             //8 
             foreach (string value in methods) {
 
-                if (!value.Equals(responseBuilder.date))  {
+                if (!value.Equals(responseBuilder.Date))  {
 
                     if (!responseList.Contains("missing date "))
                     {
@@ -159,23 +133,28 @@ namespace Server
                 }
             }
 
-           
-          
+
             // 15 --- Something wrong with this
-            if(!responseBuilder.path.Contains("/api/categories"))
+            if (responseList.Count == 0) 
             {
-                responseBuilder.Status = "4 Bad Request";
-                jsonString = JsonSerializer.Serialize<ResponseBuilder>(responseBuilder, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-                return jsonString;
+                if (responseBuilder.Path.Equals("/api/categories"))
+                {
+
+                    responseBuilder.Status = "4 Bad Request";
+                    jsonString = JsonSerializer.Serialize<ResponseBuilder>(responseBuilder, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                    return jsonString;
+                }
             }
-         
            
 
             Console.WriteLine(responseList[1]);
-           foreach (string value in responseList)
-            {
-               responseBuilder.Status += value;
-            }
+            
+                foreach (string value in responseList)
+                {
+
+                    responseBuilder.Status += value;
+                }
+           
             //  Console.WriteLine(responseBuilder.Status + " this is the final output");
 
             jsonString = JsonSerializer.Serialize<ResponseBuilder>(responseBuilder, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
